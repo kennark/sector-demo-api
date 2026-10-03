@@ -36,6 +36,27 @@ public class UserEntryServiceImpl implements UserEntryService {
     }
 
     @Override
+    public UserEntry updateUserEntry(UserEntryRequest entry) {
+        if (entry.getId() == null)
+            throw new IllegalArgumentException("Please enter an ID.");
+        if (validateUserEntry(entry)) {
+            Optional<UserEntry> dbData = entryRepository.findById(entry.getId());
+            if (dbData.isEmpty())
+                throw new IllegalArgumentException("Entry does not exist with ID " + entry.getId());
+            UserEntry entryToUpdate = dbData.get();
+            entryToUpdate.setName(entry.getName());
+            entryToUpdate.setAgreeTerms(entry.isAgreeTerms());
+            entryToUpdate.setSectors(sectorRepository.findAllById(entry.getSectorIds()));
+
+            UserEntry data = entryRepository.saveAndFlush(entryToUpdate);
+            removeChildSectors(data);
+            return data;
+        }
+
+        throw new IllegalArgumentException("Please fill all fields.");
+    }
+
+    @Override
     public Optional<UserEntry> getUserEntry(Long id) {
         Optional<UserEntry> entryOrNull = entryRepository.findById(id);
         entryOrNull.ifPresent(this::removeChildSectors);

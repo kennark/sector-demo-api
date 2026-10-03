@@ -32,4 +32,9 @@ public class ApiController {
     public Optional<UserEntry> GetUserData(@PathVariable Long id) {
         return userEntryService.getUserEntry(id);
     }
+
+    @PatchMapping("userData")
+    public UserEntry PatchUserData(@RequestBody UserEntryRequest entry) {
+        return userEntryService.updateUserEntry(entry);
+    }
 }

@@ -10,5 +10,7 @@ public interface UserEntryService {
 
     UserEntry saveUserEntry(UserEntryRequest entry);
 
+    UserEntry updateUserEntry(UserEntryRequest entry);
+
     Optional<UserEntry> getUserEntry(Long id);
 }
