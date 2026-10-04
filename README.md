@@ -8,4 +8,5 @@ This will expose the API at http://localhost:8080
 
 Available API endpoints can be found at the [ApiController class](src/main/java/com/example/demoapi/api/controller/ApiController.java)
 
-This project uses a H2 local database file.
+This project uses an H2 local database file. Database file location is defined
+at [application.properties](src/main/resources/application.properties)
